@@ -269,30 +269,111 @@
 // int[,] A = new int[N, M];
 
 
-// int row = 0, col = 0, dx = 1, dy = 0, dirChanges = 0, gran = M;
+// Решаем по методу выхода из лабиринта 
+// 1. создаём стены из цифр для остановки циклов движения
+//(цикл остановится если в следующей клетке будет находится число отличное от нуля)
+// 2.Создём цикл условием выхода из которого будет 
+// последоваетльное увеличение числа до общего количества ячеек массива
 
-// for (int i = 0; i < A.Length; i++)
+// !!!!!!!!!!!!!Работает только с квадратами
+
+// void PrintArray(int[,] Array)
 // {
-//     A[col, row] = i + 1;
-//     if (--gran == 0)
+//     for (int i = 0; i < Array.GetLength(0); i++)
 //     {
-//         gran = M * (dirChanges % 2) + N * ((dirChanges + 1) % 2) - (dirChanges / 2 - 1) - 2;
-//         int temp = dx;
-//         dx = -dy;
-//         dy = temp;
-//         dirChanges++;
+//         for (int j = 0; j < Array.GetLength(1); j++)
+//         {
+//             Console.Write($"{Array[i, j]} ");
+//         }
+//         Console.WriteLine();
 //     }
-//     col += dx;
-//     row += dy;
 // }
 
-// for (int i = 0; i < N; i++)
-// {
-//     for (int j = 0; j < M; j++)
-//     {
-//         Console.Write(A[i, j] + " ");
-//     }
-//     Console.WriteLine();
-// }
-// Console.ReadKey();
+// void FillSpiral(int[,] Array)
 
+// {
+//     int n = Array.GetLength(0);
+//     int m = Array.GetLength(1);
+//     int count = 1; // переменная для заполнения
+    
+
+//     //Заполняем периметр массива
+//     for (int j = 0; j < n; j++)
+//     {
+//         Array[0, j] = count;
+//         count++;
+//     }
+//     for (int i = 1; i < m; i++)
+//     {
+//         Array[i, n - 1] = count;
+//         count++;
+//     }
+//     for (int j = n - 2; j >= 0; j--)
+//     {
+//         Array[m - 1, j] = count;
+//         count++;
+//     }
+//     for (int i = m - 2; i > 0; i--)
+//     {
+//         Array[i, 0] = count;
+//         count++;
+//     }
+//     //Периметр заполнен.
+//     int c = 1;
+//     int d = 1;
+
+//     while (count < m * n)
+//     {
+//         //Движемся вправо.
+//         while (Array[c, d + 1] == 0)
+//         {
+//             Array[c, d] = count;
+//             count++;
+//             d++;
+//         }
+
+//         //Движемся вниз.
+//         while (Array[c + 1, d] == 0)
+//         {
+//             Array[c, d] = count;
+//             count++;
+//             c++;
+//         }
+
+//         //Движемся влево.
+//         while (Array[c, d - 1] == 0)
+//         {
+//             Array[c, d] = count;
+//             count++;
+//             d--;
+//         }
+
+//         //Движемся вверх.
+//         while (Array[c - 1, d] == 0)
+//         {
+//             Array[c, d] = count;
+//             count++;
+//             c--;
+//         }
+//     }
+
+//     //Клетка в центре не заполнена ищем её и заполняем
+//     for (int i = 0; i < m; i++)
+//     {
+//         for (int j = 0; j < n; j++)
+//         {
+//             if (Array[i, j] == 0)
+//             {
+//                 Array[i, j] = count;
+//             }
+//         }
+//     }
+// }
+
+// Console.Write("Введите количество строк и столбцов массива: ");
+// int rows = int.Parse(Console.ReadLine());
+// int columns = rows;
+// int[,] Aaaaarray = new int[rows,columns];
+// PrintArray(Aaaaarray);
+// FillSpiral(Aaaaarray);
+// PrintArray(Aaaaarray);
