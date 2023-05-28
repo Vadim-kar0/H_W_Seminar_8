@@ -223,39 +223,74 @@
 // 27(0,0,1) 90(0,1,1)
 // 26(1,0,1) 55(1,1,1)
 
-// void PrintArray3D(int[,] Array)
-// {
-//     for (int i = 0; i < Array.GetLength(0); i++)
-//     {
-//         for (int j = 0; j < Array.GetLength(1); j++)
-//         {
-//             Console.Write($"{Array[i, j]} ");
-//         }
-//         Console.WriteLine();
-//     }
-// }
+Console.Write("Введите количество строк массива: ");
+int rows = Convert.ToInt32(Console.ReadLine());
+Console.Write("Введите количество столбцов массива: ");
+int columns = Convert.ToInt32(Console.ReadLine());
+Console.Write("Введите глубину массива: ");
+int deep = Convert.ToInt32(Console.ReadLine());
+if (deep*columns*rows>90)
+{
+    Console.WriteLine("Массив из неповторяющихся чисел создать не возможно,");
+    Console.WriteLine("так как количество создаваемых ячеек превышает количество положительных двузначных чисел");
+    Console.WriteLine("Нажмите Control + С");
+}
+int[,,] array3D = new int[rows, columns, deep];
 
-// int[,] GetArray3D(int m, int n, int min, int max)
-// {
-//     int[,] result = new int[m, n];
-//     for (int i = 0; i < m; i++)
-//     {
-//         for (int j = 0; j < n; j++)
-//         {
-//             result[i, j] = new Random().Next(min, max + 1);
-//         }
+void FillArray3D(int[,,] array)
+{
+    int[] memory = new int[90];// массив всех положительных двузначных чисел
+    int chislo = 10;
+    for (int i = 0; i < memory.Length; i++)
+    {
+        memory[i] = chislo;
+        chislo++;
+    }
 
-//     }
-//     return result;
-// }
+    int m = deep * rows * columns;
+    int[] numbers = new int[m];// массив неповторяющихся двузначных чисел в случайном порядке
+    for (int i = 0; i < numbers.Length; i++)
+    {
+        int j = new Random().Next(0, 90); ;
+        while (memory[j] == 0)
+        {
+            j = new Random().Next(0, 90);
+        }
+        numbers[i] = memory[j];
+        memory[j] = 0;
 
-// Console.Write("Введите количество строк массива: ");
-// int rows = Convert.ToInt32(Console.ReadLine());
-// Console.Write("Введите количество столбцов массива: ");
-// int columns = Convert.ToInt32(Console.ReadLine());
-// Console.Write("Введите глубину массива: ");
-// int deep = Convert.ToInt32(Console.ReadLine());
-// int[,] Array = GetArray(rows, columns, 0, 10);
+    }
+    int count = 0;
+    for (int i = 0; i < rows; i++) // Заполнение трёхмерного массива из массива который содержит неповторяющиеся числа
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            for (int k = 0; k < deep; k++)
+            {
+                array[i, j, k] = numbers[count];
+                count++;
+
+            }
+        }
+    }
+}
+void PrintArray3D(int[,,] Array)
+{
+    for (int k = 0; k < deep; k++)
+    {
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                Console.Write($"{Array[i, j, k]}({i},{j},{k}) ");
+            }
+            Console.WriteLine();
+        }
+        Console.WriteLine();
+    }
+}
+FillArray3D(array3D);
+PrintArray3D(array3D);
 
 
 
@@ -295,7 +330,7 @@
 //     int n = Array.GetLength(0);
 //     int m = Array.GetLength(1);
 //     int count = 1; // переменная для заполнения
-    
+
 
 //     //Заполняем периметр массива
 //     for (int j = 0; j < n; j++)
